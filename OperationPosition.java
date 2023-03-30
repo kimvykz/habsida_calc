@@ -10,6 +10,7 @@ public class OperationPosition{
 
     }
 
+    //determining position of multiply and divide
     public void MultiAndDivide(ArrayList<String> exp_list){
         for (int i = 0; i < exp_list.size(); i ++){
             if (exp_list.get(i).contains("*") || exp_list.get(i).contains("/"))
@@ -21,6 +22,7 @@ public class OperationPosition{
         }
     }
 
+    //determining position of plus and minus
     public void PlusAndMinus(ArrayList<String> exp_list){
         for (int i = 0; i < exp_list.size(); i ++){
             if (exp_list.get(i).contains("+") || exp_list.get(i).contains("-"))

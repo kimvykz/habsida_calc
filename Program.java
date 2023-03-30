@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import mypack.*;
 
-
+//exception defined
 class myException extends Exception{
     public myException(String s)
     {
@@ -19,6 +19,7 @@ class myException extends Exception{
 
 public class Program {
 
+    //counting function
     static int Count(int a, int b, String exp) throws myException
     {
         int res = 0;
@@ -46,6 +47,7 @@ public class Program {
         return res;
     }
 
+    //checking correct operation function
     static boolean isValidOperation(String op)
     {
         List<String> ops = Arrays.asList("*", "/", "+", "-");
@@ -58,6 +60,7 @@ public class Program {
         }
     }
 
+    //checking correct numbers function
     static boolean isValidNumber(int number)
     {
         if (-10 <= number && number <= 10)
@@ -73,7 +76,7 @@ public class Program {
     public static void main(String args[]) throws IOException, myException
     {
 
-
+        //define variables
         System.out.print("Enter expression: ");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String s = reader.readLine();
@@ -81,7 +84,7 @@ public class Program {
         ArrayList<String> exps = new ArrayList<>();
         int n_cnt = 0, e_cnt = 0, cnt = 0, result = 0;
 
-
+        //input expression from console
         Scanner scan = new Scanner(s);
         while(scan.hasNext())
         {
@@ -120,23 +123,22 @@ public class Program {
         }
         scan.close();
 
-
-
+        //define copies of original Arrays
         ArrayList<String> l_exps = new ArrayList<>();
-
         ArrayList<Integer> res_t = new ArrayList<>();
-
-
         res_t = (ArrayList<Integer>)nums.clone();
         l_exps = (ArrayList<String>)exps.clone();
 
+        //checking numbers of arguments in expression
         if (res_t.size() == l_exps.size())
         {
             throw new myException("Wrong expression. Check expression, please.");
         }
 
+        //define object of user-class
         OperationPosition determineOpPos = new OperationPosition();
 
+        // loop for solving expression step by step
             for (String op : exps) {
                 if (l_exps.contains("*") | l_exps.contains("/")) {
 
@@ -162,11 +164,9 @@ public class Program {
 
                 }
 
-
-
             }
 
-
+        //output result of expression
         System.out.printf("Result of expression: %d", result);
 
     }
