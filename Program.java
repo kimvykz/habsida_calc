@@ -80,9 +80,6 @@ public class Program {
         ArrayList<Integer> nums = new ArrayList<>();
         ArrayList<String> exps = new ArrayList<>();
         int n_cnt = 0, e_cnt = 0, cnt = 0, result = 0;
-        //int res_t[] = new int[3];
-
-
 
 
         Scanner scan = new Scanner(s);
@@ -116,7 +113,7 @@ public class Program {
             }
             else
             {
-                throw new myException("incorrect expression");
+                throw new myException("incorrect expression, use only numbers like -3, -2, -1, 0, 1, 2 ,3 and etc.");
             }
 
             cnt++;
@@ -125,55 +122,46 @@ public class Program {
 
 
 
-        //System.out.println(Arrays.toString(exps));
         ArrayList<String> l_exps = new ArrayList<>();
 
         ArrayList<Integer> res_t = new ArrayList<>();
 
 
-        res_t = nums;
-        l_exps = exps;
+        res_t = (ArrayList<Integer>)nums.clone();
+        l_exps = (ArrayList<String>)exps.clone();
 
         if (res_t.size() == l_exps.size())
         {
             throw new myException("Wrong expression. Check expression, please.");
         }
 
-/*        for (int i = 0; i < res_t.size(); i++) {
-            System.out.println("l_num " + res_t.get(i));
-        }*/
-
+        OperationPosition determineOpPos = new OperationPosition();
 
             for (String op : exps) {
                 if (l_exps.contains("*") | l_exps.contains("/")) {
-                    OperationPosition determineOpPos = new OperationPosition(l_exps);
 
+                    determineOpPos.MultiAndDivide(l_exps);
                     int pos = determineOpPos.getPosition();
                     String oper = determineOpPos.getOperation();
                     res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), oper));
                     res_t.remove(pos + 1);
                     l_exps.remove(pos);
                     result = res_t.get(pos);
-                    System.out.printf("Result of *: %d \n", result);
+
                 }
 
-                if (l_exps.contains("+")) {
-                    int pos = l_exps.indexOf("+");
-                    res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), l_exps.get(pos)));
+                if (l_exps.contains("+") | l_exps.contains("-")) {
+
+                    determineOpPos.PlusAndMinus(l_exps);
+                    int pos = determineOpPos.getPosition();
+                    String oper = determineOpPos.getOperation();
+                    res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), oper));
                     res_t.remove(pos + 1);
                     l_exps.remove(pos);
                     result = res_t.get(pos);
-                    System.out.printf("Result of +: %d \n", result);
+
                 }
 
-                if (l_exps.contains("-")) {
-                    int pos = l_exps.indexOf("-");
-                    res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), l_exps.get(pos)));
-                    res_t.remove(pos + 1);
-                    l_exps.remove(pos);
-                    result = res_t.get(pos);
-                    System.out.printf("Result of -: %d \n", result);
-                }
 
 
             }

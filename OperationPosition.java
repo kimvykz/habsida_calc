@@ -6,9 +6,24 @@ public class OperationPosition{
     private String operand;
     private int position;
 
-    public OperationPosition(ArrayList<String> exp_list){
+    public OperationPosition(){
+
+    }
+
+    public void MultiAndDivide(ArrayList<String> exp_list){
         for (int i = 0; i < exp_list.size(); i ++){
             if (exp_list.get(i).contains("*") || exp_list.get(i).contains("/"))
+            {
+                operand = exp_list.get(i);
+                position = i;
+                break;
+            }
+        }
+    }
+
+    public void PlusAndMinus(ArrayList<String> exp_list){
+        for (int i = 0; i < exp_list.size(); i ++){
+            if (exp_list.get(i).contains("+") || exp_list.get(i).contains("-"))
             {
                 operand = exp_list.get(i);
                 position = i;
