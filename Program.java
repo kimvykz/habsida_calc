@@ -7,6 +7,8 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import mypack.*;
+
 
 class myException extends Exception{
     public myException(String s)
@@ -14,7 +16,6 @@ class myException extends Exception{
         super(s);
     }
 }
-
 
 public class Program {
 
@@ -76,8 +77,8 @@ public class Program {
         System.out.print("Enter expression: ");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String s = reader.readLine();
-        int nums[] = new int[3];
-        String exps[] = new String[2];
+        ArrayList<Integer> nums = new ArrayList<>();
+        ArrayList<String> exps = new ArrayList<>();
         int n_cnt = 0, e_cnt = 0, cnt = 0, result = 0;
         //int res_t[] = new int[3];
 
@@ -89,8 +90,8 @@ public class Program {
         {
             if (scan.hasNextInt() & cnt % 2 == 0)
             {
-                nums[n_cnt] = scan.nextInt();
-                if (isValidNumber(nums[n_cnt]))
+                nums.add(scan.nextInt());
+                if (isValidNumber(nums.get(n_cnt)))
                 {
                     n_cnt++;
                 }
@@ -104,13 +105,13 @@ public class Program {
                 {
                     throw new myException("Does not support more than 3 numbers");
                 }
-                exps[e_cnt] = scan.next();
-                if (isValidOperation(exps[e_cnt]))
+                exps.add(scan.next());
+                if (isValidOperation(exps.get(e_cnt)))
                 {
                     e_cnt++;
                 }
                 else {
-                    throw new myException("incorrect operation");
+                    throw new myException("incorrect operation, please use only: *, /, + or -");
                 }
             }
             else
@@ -129,14 +130,13 @@ public class Program {
 
         ArrayList<Integer> res_t = new ArrayList<>();
 
-        for (int num : nums)
-        {
-            res_t.add(num);
-        }
 
-        for (String exp : exps)
+        res_t = nums;
+        l_exps = exps;
+
+        if (res_t.size() == l_exps.size())
         {
-            l_exps.add(exp);
+            throw new myException("Wrong expression. Check expression, please.");
         }
 
 /*        for (int i = 0; i < res_t.size(); i++) {
@@ -145,22 +145,16 @@ public class Program {
 
 
             for (String op : exps) {
-                if (l_exps.contains("*")) {
-                    int pos = l_exps.indexOf("*");
-                    res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), l_exps.get(pos)));
+                if (l_exps.contains("*") | l_exps.contains("/")) {
+                    OperationPosition determineOpPos = new OperationPosition(l_exps);
+
+                    int pos = determineOpPos.getPosition();
+                    String oper = determineOpPos.getOperation();
+                    res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), oper));
                     res_t.remove(pos + 1);
                     l_exps.remove(pos);
                     result = res_t.get(pos);
                     System.out.printf("Result of *: %d \n", result);
-                }
-
-                if (l_exps.contains("/")) {
-                    int pos = l_exps.indexOf("/");
-                    res_t.set(pos, Count(res_t.get(pos), res_t.get(pos + 1), l_exps.get(pos)));
-                    res_t.remove(pos + 1);
-                    l_exps.remove(pos);
-                    result = res_t.get(pos);
-                    System.out.printf("Result of /: %d \n", result);
                 }
 
                 if (l_exps.contains("+")) {
